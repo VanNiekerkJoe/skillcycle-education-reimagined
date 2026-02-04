@@ -10,7 +10,7 @@ const impactStats = [
   { value: 10000, suffix: "+", label: "Students we aim to reach", icon: <GraduationCap size={24} /> },
   { value: 5000, suffix: "+", label: "Laptops saved from landfills", icon: <Laptop size={24} /> },
   { value: 50, suffix: "+", label: "Schools targeted for deployment", icon: <School size={24} /> },
-  { value: 25, suffix: "t", label: "CO2 emissions prevented", icon: <Leaf size={24} /> },
+  { value: 25, suffix: "t", label: "CO2 emissions prevented monthly", icon: <Leaf size={24} /> },
 ];
 
 const sdgGoals = [
@@ -37,7 +37,7 @@ const sdgGoals = [
 const testimonials = [
   {
     quote: "SkillCycle has the potential to transform how rural schools access digital education. This is exactly what our communities need.",
-    author: "Future School Partner",
+    author: "School Partner",
     role: "Principal, Rural School",
   },
   {
@@ -270,21 +270,21 @@ const Impact = () => {
               </div>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Our Vision for 2030</h2>
               <p className="text-lg text-muted-foreground mb-8">
-                By 2030, we envision SkillCycle reaching 100,000 students across 500 schools, 
-                diverting 50,000 laptops from landfills, and becoming the standard for sustainable 
-                digital education in underserved communities across Africa.
+                By 2030, we envision SkillCycle reaching 1 million students across 2000 schools, 
+                diverting over a million laptops from landfills, and becoming the standard for sustainable 
+                digital education in underserved communities across Africa and then the rest of the world.
               </p>
               <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
                 <div className="p-4 rounded-xl bg-card border border-border">
-                  <div className="text-2xl md:text-3xl font-bold text-primary">100K</div>
+                  <div className="text-2xl md:text-3xl font-bold text-primary">1M</div>
                   <p className="text-xs text-muted-foreground">Students</p>
                 </div>
                 <div className="p-4 rounded-xl bg-card border border-border">
-                  <div className="text-2xl md:text-3xl font-bold text-primary">500</div>
+                  <div className="text-2xl md:text-3xl font-bold text-primary">2000</div>
                   <p className="text-xs text-muted-foreground">Schools</p>
                 </div>
                 <div className="p-4 rounded-xl bg-card border border-border">
-                  <div className="text-2xl md:text-3xl font-bold text-primary">50K</div>
+                  <div className="text-2xl md:text-3xl font-bold text-primary">1M+</div>
                   <p className="text-xs text-muted-foreground">Laptops Saved</p>
                 </div>
               </div>
