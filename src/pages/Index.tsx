@@ -7,7 +7,7 @@ import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { StatCard } from "@/components/ui/StatCard";
 
 const stats = [
-  { value: 35, suffix: "%", label: "of people lack basic digital skills globally (That's over 2.6 billion)", icon: <Monitor size={24} /> },
+  { value: 35, suffix: "%", label: "of people lack basic digital skills globally (That's over 2.6 billion people)", icon: <Monitor size={24} /> },
   { value: 18, suffix: "%", label: "of rural schools have internet access (1 in every 5 schools)", icon: <WifiOff size={24} /> },
   { value: 87, suffix: "%", label: "of jobs now require digital literacy (9 out of 10 jobs)", icon: <GraduationCap size={24} /> },
   { value: 240, suffix: "M", label: "Windows 10 PCs facing obsolescence (Yes , 240M!)", icon: <Recycle size={24} /> },
