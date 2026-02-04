@@ -132,15 +132,15 @@ const Impact = () => {
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-3 rounded-lg bg-muted">
                   <span className="text-sm">E-waste diverted</span>
-                  <span className="font-bold text-green-500">5+ tonnes</span>
+                  <span className="font-bold text-green-500">110+ tonnes</span>
                 </div>
                 <div className="flex items-center justify-between p-3 rounded-lg bg-muted">
                   <span className="text-sm">CO2 emissions saved</span>
-                  <span className="font-bold text-green-500">25+ tonnes</span>
+                  <span className="font-bold text-green-500">3200+ metric tonnes</span>
                 </div>
                 <div className="flex items-center justify-between p-3 rounded-lg bg-muted">
                   <span className="text-sm">Toxic materials prevented</span>
-                  <span className="font-bold text-green-500">500+ kg</span>
+                  <span className="font-bold text-green-500">10 metric tonnes</span>
                 </div>
               </div>
             </motion.div>
@@ -171,7 +171,7 @@ const Impact = () => {
                 </div>
                 <div className="flex items-center justify-between p-3 rounded-lg bg-muted">
                   <span className="text-sm">Learning hours enabled</span>
-                  <span className="font-bold text-primary">100,000+</span>
+                  <span className="font-bold text-primary">10,800,000+</span>
                 </div>
               </div>
             </motion.div>
