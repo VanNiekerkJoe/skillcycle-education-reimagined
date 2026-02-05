@@ -1,29 +1,55 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Monitor, BookOpen, Gamepad2, Video, FileText, WifiOff, Server, Users, BarChart3, MessageSquare, Upload, Check, BrainCircuit } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, Monitor, BookOpen, Gamepad2, Video, FileText, WifiOff, Server, Users, BarChart3, MessageSquare, Upload, Check, BrainCircuit, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
+import { TextbookLibrary } from "@/components/demos/TextbookLibrary";
+import { VideoLibrary } from "@/components/demos/VideoLibrary";
+import { MathGame } from "@/components/demos/MathGame";
+import { QuizDemo } from "@/components/demos/QuizDemo";
+import { SkillAIDemo } from "@/components/demos/SkillAIDemo";
 
-const skillOSFeatures = [
-  { icon: <Monitor size={24} />, title: "Lightweight OS", desc: "Runs on any old Windows PC that can't run Windows 11" },
-  { icon: <BookOpen size={24} />, title: "CAPS-Aligned", desc: "South African curriculum-aligned study materials" },
-  { icon: <Gamepad2 size={24} />, title: "Educational Games", desc: "Interactive learning through engaging gameplay" },
-  { icon: <Video size={24} />, title: "Video Lessons", desc: "High-quality instructional videos from expert educators" },
-  { icon: <FileText size={24} />, title: "Digital Textbooks", desc: "Complete textbook library powered by Siyavula" },
-  { icon: <WifiOff size={24} />, title: "100% Offline", desc: "Works without any internet connection" },
-];
+type DemoType = "textbooks" | "videos" | "games" | "quizzes" | "skillai" | null;
 
-const studentHubFeatures = [
-  { icon: <BarChart3 size={24} />, title: "Progress Analytics", desc: "Detailed insights into performance and improvement areas" },
-  { icon: <MessageSquare size={24} />, title: "Peer Messaging", desc: "Collaborate with classmates and ask questions" },
-  { icon: <Upload size={24} />, title: "Assignment Submission", desc: "Submit work and receive feedback digitally" },
-  { icon: <Users size={24} />, title: "Teacher Connection", desc: "Direct communication with educators" },
-];
+interface FeatureItem {
+  icon: React.ReactNode;
+  title: string;
+  desc: string;
+  demo?: DemoType;
+}
 
 const Solution = () => {
+  const [activeDemo, setActiveDemo] = useState<DemoType>(null);
+
+  const skillOSFeatures: FeatureItem[] = [
+    { icon: <Monitor size={24} />, title: "Lightweight OS", desc: "Runs on any old Windows PC that can't run Windows 11" },
+    { icon: <BookOpen size={24} />, title: "Digital Textbooks", desc: "Complete textbook library powered by Siyavula", demo: "textbooks" },
+    { icon: <Video size={24} />, title: "Video Lessons", desc: "High-quality instructional videos from expert educators", demo: "videos" },
+    { icon: <Gamepad2 size={24} />, title: "Educational Games", desc: "Interactive learning through engaging gameplay", demo: "games" },
+    { icon: <FileText size={24} />, title: "Quizzes & Tests", desc: "Practice with curriculum-aligned assessments", demo: "quizzes" },
+    { icon: <BrainCircuit size={24} />, title: "SkillAI", desc: "A teacher when there isn't one - AI-powered tutoring", demo: "skillai" },
+    { icon: <WifiOff size={24} />, title: "100% Offline", desc: "Works without any internet connection" },
+  ];
+
+  const studentHubFeatures: FeatureItem[] = [
+    { icon: <BarChart3 size={24} />, title: "Progress Analytics", desc: "Detailed insights into performance and improvement areas" },
+    { icon: <MessageSquare size={24} />, title: "Peer Messaging", desc: "Collaborate with classmates and ask questions" },
+    { icon: <Upload size={24} />, title: "Assignment Submission", desc: "Submit work and receive feedback digitally" },
+    { icon: <Users size={24} />, title: "Teacher Connection", desc: "Direct communication with educators" },
+    { icon: <BrainCircuit size={24} />, title: "SkillAI Tutor", desc: "24/7 AI assistant for homework help", demo: "skillai" },
+  ];
+
   return (
     <Layout>
+      {/* Demo Dialogs */}
+      <TextbookLibrary open={activeDemo === "textbooks"} onOpenChange={(open) => !open && setActiveDemo(null)} />
+      <VideoLibrary open={activeDemo === "videos"} onOpenChange={(open) => !open && setActiveDemo(null)} />
+      <MathGame open={activeDemo === "games"} onOpenChange={(open) => !open && setActiveDemo(null)} />
+      <QuizDemo open={activeDemo === "quizzes"} onOpenChange={(open) => !open && setActiveDemo(null)} />
+      <SkillAIDemo open={activeDemo === "skillai"} onOpenChange={(open) => !open && setActiveDemo(null)} />
+
       {/* Hero Section */}
       <section className="relative py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-background" />
@@ -74,7 +100,7 @@ const Solution = () => {
                 </div>
                 
                 {/* Desktop Icons Grid */}
-                <div className="grid grid-cols-4 gap-4 mb-6">
+                <div className="grid grid-cols-5 gap-3 mb-6">
                   {[
                     { icon: <BookOpen size={20} />, label: "Textbooks" },
                     { icon: <Video size={20} />, label: "Videos" },
@@ -179,6 +205,16 @@ const Solution = () => {
                 </div>
                 <h3 className="font-semibold text-lg mb-2">{feature.title}</h3>
                 <p className="text-sm text-muted-foreground">{feature.desc}</p>
+                {feature.demo && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="mt-3 text-primary hover:text-primary"
+                    onClick={() => setActiveDemo(feature.demo!)}
+                  >
+                    Try Demo <ExternalLink size={14} className="ml-1" />
+                  </Button>
+                )}
               </motion.div>
             ))}
           </div>
@@ -335,6 +371,16 @@ const Solution = () => {
                     <div>
                       <h3 className="font-semibold mb-1">{feature.title}</h3>
                       <p className="text-sm text-muted-foreground">{feature.desc}</p>
+                      {feature.demo && (
+                        <Button
+                          variant="link"
+                          size="sm"
+                          className="p-0 h-auto mt-2 text-primary"
+                          onClick={() => setActiveDemo(feature.demo!)}
+                        >
+                          Try Demo →
+                        </Button>
+                      )}
                     </div>
                   </motion.div>
                 ))}
