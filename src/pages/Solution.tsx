@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Monitor, BookOpen, Gamepad2, Video, FileText, WifiOff, Server, Users, BarChart3, MessageSquare, Upload, Check } from "lucide-react";
+import { ArrowRight, Monitor, BookOpen, Gamepad2, Video, FileText, WifiOff, Server, Users, BarChart3, MessageSquare, Upload, Check, BrainCircuit } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout/Layout";
@@ -80,6 +80,7 @@ const Solution = () => {
                     { icon: <Video size={20} />, label: "Videos" },
                     { icon: <Gamepad2 size={20} />, label: "Games" },
                     { icon: <FileText size={20} />, label: "Quizzes" },
+                    { icon: <BrainCircuit size={20} />, label: "SkillAI" },
                   ].map((item, i) => (
                     <motion.div
                       key={i}
