@@ -345,13 +345,13 @@ const Solution = () => {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="text-primary text-sm font-medium uppercase tracking-wider">StudentHub</span>
+              <span className="text-primary text-sm font-medium uppercase tracking-wider">SkillHub</span>
               <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-6">
                 Your Learning{" "}
                 <span className="text-gradient">Dashboard</span>
               </h2>
               <p className="text-muted-foreground mb-8">
-                StudentHub is the central hub where students can track their progress, 
+                SkillHub is the central hub where students can track their progress, 
                 communicate with peers and teachers, and manage their educational journey.
               </p>
 

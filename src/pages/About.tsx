@@ -199,47 +199,49 @@ const About = () => {
       </SectionWrapper>
 
       {/* ---------------- TIMELINE ---------------- */}
-      <SectionWrapper className="bg-secondary">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <span className="text-primary text-sm font-medium uppercase tracking-wider">
-              Our Journey
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4">
-              The SkillCycle <span className="text-gradient">Story</span>
-            </h2>
-          </div>
+     <SectionWrapper className="bg-secondary">
+  <div className="container mx-auto px-4">
+    <div className="text-center mb-12">
+      <span className="text-primary text-sm font-medium uppercase tracking-wider">
+        Our Journey
+      </span>
+      <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-4">
+        The SkillCycle <span className="text-gradient">Story</span>
+      </h2>
+    </div>
 
-          <div className="max-w-3xl mx-auto relative">
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-border" />
-            <div className="space-y-8">
-              {timeline.map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="relative pl-20"
-                >
-                  <div className="absolute left-5 w-6 h-6 rounded-full bg-primary border-4 border-background" />
-                  <div className="p-6 rounded-2xl bg-card border border-border">
-                    <span className="text-primary text-sm font-bold">
-                      {item.year}
-                    </span>
-                    <h3 className="text-lg font-semibold mt-1 mb-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm">
-                      {item.desc}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
+    <div className="max-w-3xl mx-auto relative">
+      {/* Updated line color - changed from bg-border to a brighter color */}
+      <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-300 dark:bg-gray-400" />
+      <div className="space-y-8">
+        {timeline.map((item, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ delay: index * 0.1 }}
+            viewport={{ once: true }}
+            className="relative pl-20"
+          >
+            {/* Circles remain unchanged with original bg-primary */}
+            <div className="absolute left-5 w-6 h-6 rounded-full bg-primary border-4 border-background" />
+            <div className="p-6 rounded-2xl bg-card border border-border">
+              <span className="text-primary text-sm font-bold">
+                {item.year}
+              </span>
+              <h3 className="text-lg font-semibold mt-1 mb-2">
+                {item.title}
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                {item.desc}
+              </p>
             </div>
-          </div>
-        </div>
-      </SectionWrapper>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  </div>
+</SectionWrapper>
 
       {/* ---------------- MOTIVATION ---------------- */}
       <SectionWrapper>
