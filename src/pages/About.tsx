@@ -326,7 +326,6 @@ const About = () => {
                   />
                   <div className="absolute inset-0 rounded-full bg-primary/0 group-hover:bg-primary/10 transition-colors flex items-center justify-center">
                     <span className="opacity-0 group-hover:opacity-100 transition-opacity text-xs font-medium text-primary">
-                      View Profile
                     </span>
                   </div>
                 </div>
