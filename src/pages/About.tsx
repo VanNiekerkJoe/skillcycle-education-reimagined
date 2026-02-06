@@ -1,71 +1,118 @@
-import { motion } from "framer-motion";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Mail,
-  User,
-  Building,
-  MessageSquare,
-  Send,
   Linkedin,
   Twitter,
   Award,
+  X,
+  GraduationCap,
+  Code,
+  Server,
+  Database,
+  Brain,
+  Briefcase,
+  MapPin,
+  Calendar,
+  Zap,
+  Github,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Layout } from "@/components/layout/Layout";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
-import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 /* ✅ IMPORT IMAGES */
 import leo from "@/assets/leo.jpg";
 import dylan from "@/assets/dylan.jpg";
 
-/* ------------------ FORM SCHEMA ------------------ */
+/* ------------------ TEAM DATA ------------------ */
 
-const contactFormSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email address"),
-  organization: z.string().optional(),
-  type: z.string().min(1, "Please select an inquiry type"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
-});
+interface TeamMember {
+  name: string;
+  role: string;
+  bio: string;
+  image: string;
+  university: string;
+  degree: string;
+  location: string;
+  skills: { name: string; icon: React.ElementType }[];
+  expertise: string[];
+  quote: string;
+  funFact: string;
+  socials: {
+    linkedin?: string;
+    twitter?: string;
+    github?: string;
+    email: string;
+  };
+}
 
-type ContactFormData = z.infer<typeof contactFormSchema>;
-
-/* ------------------ DATA ------------------ */
-
-const teamMembers = [
+const teamMembers: TeamMember[] = [
   {
     name: "Leo Van Niekerk",
     role: "Founder & CEO",
-    bio: "Dedicated to bridging the digital divide in South African education. Managing partnerships and school deployment strategies.",
+    bio: "Dedicated to bridging the digital divide in South African education. Leo combines his technical expertise with business acumen to lead SkillCycle's mission of turning e-waste into educational opportunities.",
     image: leo,
+    university: "Emeris University",
+    degree: "Computer Engineering",
+    location: "South Africa",
+    skills: [
+      { name: "Programming", icon: Code },
+      { name: "Databases", icon: Database },
+      { name: "Business Strategy", icon: Briefcase },
+    ],
+    expertise: [
+      "Full-Stack Development",
+      "Database Architecture",
+      "Business Development",
+      "Strategic Planning",
+      "Partnership Management",
+      "EdTech Innovation",
+    ],
+    quote: "I was blessed to be born into a world where technology was accessible. Now I have a responsibility I can't ignore.",
+    funFact: "Can debug code faster than he can make coffee ☕",
+    socials: {
+      linkedin: "https://linkedin.com/in/leovanniekerk",
+      github: "https://github.com/leovanniekerk",
+      email: "leo@skillcycle.org",
+    },
   },
   {
     name: "Dylan van Niekerk",
     role: "Co-Founder & CTO",
-    bio: "Passionate about leveraging technology to solve real-world problems. Leading the development of SkillOS and our offline server infrastructure.",
+    bio: "Passionate about leveraging technology to solve real-world problems. Dylan leads the development of SkillOS and the offline server infrastructure that powers our educational platform.",
     image: dylan,
+    university: "University of Pretoria",
+    degree: "Electrical Engineering",
+    location: "South Africa",
+    skills: [
+      { name: "Servers & Infrastructure", icon: Server },
+      { name: "AI & Machine Learning", icon: Brain },
+      { name: "System Architecture", icon: Zap },
+    ],
+    expertise: [
+      "Server Infrastructure",
+      "Artificial Intelligence",
+      "Embedded Systems",
+      "Network Architecture",
+      "Hardware Integration",
+      "Performance Optimization",
+    ],
+    quote: "Every laptop saved from the landfill is a future unlocked for a child who deserves the same chances we had.",
+    funFact: "Built his first server rack at age 16 🖥️",
+    socials: {
+      linkedin: "https://linkedin.com/in/dylanvanniekerk",
+      github: "https://github.com/dylanvanniekerk",
+      email: "dylan@skillcycle.org",
+    },
   },
 ];
 
@@ -95,30 +142,131 @@ const timeline = [
 /* ------------------ COMPONENT ------------------ */
 
 const About = () => {
-  const { toast } = useToast();
-
-  const form = useForm<ContactFormData>({
-    resolver: zodResolver(contactFormSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      organization: "",
-      type: "",
-      message: "",
-    },
-  });
-
-  const onSubmit = (data: ContactFormData) => {
-    console.log("Form submitted:", data);
-    toast({
-      title: "Message sent!",
-      description: "Thank you for reaching out. We'll get back to you soon.",
-    });
-    form.reset();
-  };
+  const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
 
   return (
     <Layout>
+      {/* Team Member Modal */}
+      <Dialog open={!!selectedMember} onOpenChange={() => setSelectedMember(null)}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          {selectedMember && (
+            <>
+              <DialogHeader>
+                <div className="flex flex-col md:flex-row items-center gap-6 pt-4">
+                  <img
+                    src={selectedMember.image}
+                    alt={selectedMember.name}
+                    className="w-28 h-28 rounded-full object-cover border-4 border-primary/20"
+                  />
+                  <div className="text-center md:text-left">
+                    <DialogTitle className="text-2xl font-bold">
+                      {selectedMember.name}
+                    </DialogTitle>
+                    <p className="text-primary font-medium">{selectedMember.role}</p>
+                    <div className="flex items-center justify-center md:justify-start gap-2 mt-2 text-sm text-muted-foreground">
+                      <MapPin size={14} />
+                      <span>{selectedMember.location}</span>
+                    </div>
+                  </div>
+                </div>
+              </DialogHeader>
+
+              <div className="space-y-6 mt-6">
+                {/* University & Degree */}
+                <div className="flex items-center gap-3 p-4 rounded-xl bg-primary/10 border border-primary/20">
+                  <GraduationCap className="w-8 h-8 text-primary" />
+                  <div>
+                    <p className="font-semibold">{selectedMember.degree}</p>
+                    <p className="text-sm text-muted-foreground">{selectedMember.university}</p>
+                  </div>
+                </div>
+
+                {/* Bio */}
+                <div>
+                  <h4 className="font-semibold mb-2">About</h4>
+                  <p className="text-muted-foreground">{selectedMember.bio}</p>
+                </div>
+
+                {/* Core Skills */}
+                <div>
+                  <h4 className="font-semibold mb-3">Core Skills</h4>
+                  <div className="flex flex-wrap gap-3">
+                    {selectedMember.skills.map((skill, i) => (
+                      <div
+                        key={i}
+                        className="flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border"
+                      >
+                        <skill.icon size={16} className="text-primary" />
+                        <span className="text-sm font-medium">{skill.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Expertise */}
+                <div>
+                  <h4 className="font-semibold mb-3">Areas of Expertise</h4>
+                  <div className="grid grid-cols-2 gap-2">
+                    {selectedMember.expertise.map((exp, i) => (
+                      <div
+                        key={i}
+                        className="flex items-center gap-2 text-sm text-muted-foreground"
+                      >
+                        <span className="text-primary">•</span>
+                        {exp}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Quote */}
+                <div className="p-4 rounded-xl bg-muted border-l-4 border-primary">
+                  <p className="italic text-muted-foreground">"{selectedMember.quote}"</p>
+                </div>
+
+                {/* Fun Fact */}
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-primary/5">
+                  <span className="text-xl">💡</span>
+                  <p className="text-sm text-muted-foreground">
+                    <span className="font-medium">Fun fact:</span> {selectedMember.funFact}
+                  </p>
+                </div>
+
+                {/* Social Links */}
+                <div className="flex justify-center gap-3 pt-4 border-t border-border">
+                  {selectedMember.socials.linkedin && (
+                    <a
+                      href={selectedMember.socials.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center hover:bg-primary/10 transition-colors"
+                    >
+                      <Linkedin size={18} />
+                    </a>
+                  )}
+                  {selectedMember.socials.github && (
+                    <a
+                      href={selectedMember.socials.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center hover:bg-primary/10 transition-colors"
+                    >
+                      <Github size={18} />
+                    </a>
+                  )}
+                  <a
+                    href={`mailto:${selectedMember.socials.email}`}
+                    className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center hover:bg-primary/10 transition-colors"
+                  >
+                    <Mail size={18} />
+                  </a>
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
       {/* ---------------- HERO ---------------- */}
       <section className="relative py-20 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-background" />
@@ -154,7 +302,7 @@ const About = () => {
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               We're two university students united by a shared belief that
-              technology should be accessible to everyone.
+              technology should be accessible to everyone. Click on our profiles to learn more!
             </p>
           </div>
 
@@ -166,31 +314,54 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="p-8 rounded-2xl bg-card border border-border text-center"
+                onClick={() => setSelectedMember(member)}
+                className="p-8 rounded-2xl bg-card border border-border text-center cursor-pointer hover:border-primary/50 hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 group"
               >
-                {/* ✅ IMAGE */}
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-32 h-32 rounded-full object-cover mx-auto mb-6 border-4 border-primary/20"
-                />
+                {/* IMAGE */}
+                <div className="relative mx-auto w-32 h-32 mb-6">
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-32 h-32 rounded-full object-cover border-4 border-primary/20 group-hover:border-primary/50 transition-colors"
+                  />
+                  <div className="absolute inset-0 rounded-full bg-primary/0 group-hover:bg-primary/10 transition-colors flex items-center justify-center">
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-xs font-medium text-primary">
+                      View Profile
+                    </span>
+                  </div>
+                </div>
 
                 <h3 className="text-xl font-bold mb-1">{member.name}</h3>
-                <p className="text-primary text-sm mb-4">{member.role}</p>
-                <p className="text-muted-foreground text-sm mb-6">
+                <p className="text-primary text-sm mb-2">{member.role}</p>
+                <p className="text-muted-foreground text-xs mb-4">
+                  {member.degree} • {member.university}
+                </p>
+                <p className="text-muted-foreground text-sm mb-6 line-clamp-2">
                   {member.bio}
                 </p>
 
+                <div className="flex flex-wrap justify-center gap-2 mb-4">
+                  {member.skills.map((skill, i) => (
+                    <span
+                      key={i}
+                      className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs"
+                    >
+                      <skill.icon size={12} />
+                      {skill.name}
+                    </span>
+                  ))}
+                </div>
+
                 <div className="flex justify-center gap-3">
-                  <a className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center hover:bg-primary/10">
+                  <span className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
                     <Linkedin size={18} />
-                  </a>
-                  <a className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center hover:bg-primary/10">
-                    <Twitter size={18} />
-                  </a>
-                  <a className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center hover:bg-primary/10">
+                  </span>
+                  <span className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
+                    <Github size={18} />
+                  </span>
+                  <span className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
                     <Mail size={18} />
-                  </a>
+                  </span>
                 </div>
               </motion.div>
             ))}
@@ -211,8 +382,8 @@ const About = () => {
     </div>
 
     <div className="max-w-3xl mx-auto relative">
-      {/* Updated line color - changed from bg-border to a brighter color */}
-      <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-300 dark:bg-gray-400" />
+      {/* Timeline line */}
+      <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-border" />
       <div className="space-y-8">
         {timeline.map((item, index) => (
           <motion.div

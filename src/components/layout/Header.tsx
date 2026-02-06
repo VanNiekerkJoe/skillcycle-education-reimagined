@@ -11,6 +11,7 @@ const navLinks = [
   { name: "Our Solution", path: "/solution" },
   { name: "Impact", path: "/impact" },
   { name: "About", path: "/about" },
+  { name: "Get Involved", path: "/get-involved" },
 ];
 
 export const Header = () => {
@@ -47,7 +48,7 @@ export const Header = () => {
           {/* CTA Button */}
           <div className="hidden md:block">
             <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90 glow-cyan">
-              <Link to="/about#contact">Get Involved</Link>
+              <Link to="/get-involved">Get Involved</Link>
             </Button>
           </div>
 
@@ -81,7 +82,7 @@ export const Header = () => {
                 </Link>
               ))}
               <Button asChild className="mt-2 bg-primary text-primary-foreground">
-                <Link to="/about#contact" onClick={() => setMobileMenuOpen(false)}>
+                <Link to="/get-involved" onClick={() => setMobileMenuOpen(false)}>
                   Get Involved
                 </Link>
               </Button>
